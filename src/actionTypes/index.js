@@ -1,0 +1,4 @@
+export const ADDTODO = "ADDTODO";
+export const INPUTCHANGE = "INPUTCHANGE";
+export const TOGGLECOMPLETION = "TOGGLECOMPLETION";
+export const DELETETODO = "DELETETODO";
