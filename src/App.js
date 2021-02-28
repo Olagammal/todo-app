@@ -4,6 +4,7 @@ import InputTodo from "./components/InputTodo";
 import TodoContainer from "./components/TodoContainer";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 class App extends Component {
   render() {

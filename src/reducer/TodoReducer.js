@@ -13,9 +13,9 @@ const TodoReducer = (state = initialState, action) => {
       let placeHolderTodos = JSON.parse(JSON.stringify(state.todos));
       placeHolderTodos.map((singleTodo) =>
         singleTodo.id === action.payload
-          ? singleTodo.status === "complete"
+          ? singleTodo.status === "completed"
             ? (singleTodo.status = "pending")
-            : (singleTodo.status = "complete")
+            : (singleTodo.status = "completed")
           : ""
       );
       return { ...state, todos: [...placeHolderTodos] };

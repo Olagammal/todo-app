@@ -49,9 +49,12 @@ class InputTodo extends Component {
               onKeyPress={(e) =>
                 e.key === "Enter" ? this.handleAddTodo(e) : ""
               }
+              placeholder="Enter a new task..."
             />
             <InputGroupAddon addonType="append">
-              <Button type="submit">Add Todo</Button>
+              <Button type="submit" className="addTodobtn">
+                Add Todo
+              </Button>
             </InputGroupAddon>
           </InputGroup>
         </FormGroup>
