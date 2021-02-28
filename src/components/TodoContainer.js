@@ -12,11 +12,12 @@ class TodoContainer extends Component {
   render() {
     return (
       <Form>
-        <FormGroup></FormGroup>
-        {this.props.todo &&
-          this.props.todo.todos.map((singleTodo) => (
-            <Todo key={singleTodo.id} singleTodo={singleTodo} />
-          ))}
+        <FormGroup>
+          {this.props.todo &&
+            this.props.todo.todos.map((singleTodo) => (
+              <Todo key={singleTodo.id} singleTodo={singleTodo} />
+            ))}
+        </FormGroup>
       </Form>
     );
   }
