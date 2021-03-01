@@ -63,3 +63,6 @@ input.completed.form-control,
   background-color: #7fbfdb !important;
   text-decoration: line-through;
 }
+.form-control:focus {
+  box-shadow: none;
+}

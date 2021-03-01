@@ -38,6 +38,7 @@ class InputTodo extends Component {
           e.preventDefault();
           this.handleAddTodo(e);
         }}
+        data-test="InputTodo"
       >
         <FormGroup>
           <InputGroup>
