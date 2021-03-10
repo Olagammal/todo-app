@@ -58,10 +58,14 @@ form {
   width: 0.9rem;
   color: #ffffff;
 }
+.form-control{
+  border-color: #ffffff !important;
+}
 input.completed.form-control,
 .completed {
   background-color: #7fbfdb !important;
   text-decoration: line-through;
+  border-color: #7fbfdb !important;
 }
 .form-control:focus {
   box-shadow: none;
