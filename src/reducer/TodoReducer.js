@@ -5,7 +5,7 @@ const initialState = {
   todos: [],
 };
 
-const TodoReducer = (state = initialState, action) => {
+const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADDTODO:
       return { ...state, todos: [...state.todos, action.payload] };
@@ -32,4 +32,4 @@ const TodoReducer = (state = initialState, action) => {
   }
 };
 
-export default TodoReducer;
+export default todoReducer;
