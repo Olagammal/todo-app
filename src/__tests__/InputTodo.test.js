@@ -64,7 +64,7 @@ describe("input todo component", () => {
     });
   });
 
-  it("should change store when button is clicked", () => {
+  it("should add todo to store when button is clicked", () => {
     expect(
       todoreducer(
         { todos: ["ppp"] },

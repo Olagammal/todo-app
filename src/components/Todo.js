@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { handleAlert } from "../actions/alert"
+import { handleAlert } from "../actions/alert";
 import { Input, InputGroup, InputGroupAddon } from "reactstrap";
 import { bindActionCreators } from "redux";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -14,7 +14,6 @@ class Todo extends Component {
 
   toggleTodoCompletion = (todoId) => {
     this.props.toggleCompletion(todoId);
-
   };
 
   handleDeleteTodo = (todoId) => {
@@ -26,28 +25,32 @@ class Todo extends Component {
         <InputGroup>
           <InputGroupAddon addonType="prepend">
             <span
-              className={`input-group-text check-box ${this.props.singleTodo.status === "completed" ? `completed` : ``
-                }`}
+              className={`input-group-text check-box ${
+                this.props.singleTodo.status === "completed" ? `completed` : ``
+              }`}
               onClick={(e) =>
                 this.toggleTodoCompletion(this.props.singleTodo.id)
               }
+              data-testid="check-box"
             >
               {this.props.singleTodo.status === "pending" ? (
                 <RiCheckboxBlankLine />
               ) : (
-                  <RiCheckboxFill />
-                )}
+                <RiCheckboxFill />
+              )}
             </span>
           </InputGroupAddon>
           <Input
             value={this.props.singleTodo.text}
             readOnly
-            className={`${this.props.singleTodo.status === "completed" ? `completed` : ``
-              }`}
+            className={`${
+              this.props.singleTodo.status === "completed" ? `completed` : ``
+            }`}
           />
           <span
             className="input-group-text trash-icon"
             onClick={(e) => this.handleDeleteTodo(this.props.singleTodo.id)}
+            data-testid="trash-icon"
           >
             <BsFillTrashFill />
           </span>
@@ -59,12 +62,15 @@ class Todo extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    alert: state.alertReducer
+    alert: state.alertReducer,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ toggleCompletion, deleteTodo, handleAlert }, dispatch);
+  return bindActionCreators(
+    { toggleCompletion, deleteTodo, handleAlert },
+    dispatch
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo);
