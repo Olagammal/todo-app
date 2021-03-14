@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { inputChange } from "../actions/inputAction";
-import { handleAlert } from "../actions/alert"
+import { handleAlert } from "../actions/alert";
 import { addTodo } from "../actions/todoAction";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -13,7 +13,7 @@ import {
   InputGroupAddon,
   Button,
 } from "reactstrap";
-import Alert from "./Alert"
+import Alert from "./Alert";
 
 class InputTodo extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class InputTodo extends Component {
     this.props.inputChange(e.target.value);
   };
   handleAddTodo = (e) => {
-    const { inputTodo } = this.props
+    const { inputTodo } = this.props;
     e.preventDefault();
     if (inputTodo.todo) {
       this.props.addTodo({
@@ -32,9 +32,8 @@ class InputTodo extends Component {
         status: "pending",
       });
       this.props.inputChange("");
-    }
-    else {
-      this.props.handleAlert('error', 'Enter a valid to-do')
+    } else {
+      this.props.handleAlert("error", "Enter a valid to-do");
     }
   };
 
@@ -58,9 +57,14 @@ class InputTodo extends Component {
                 e.key === "Enter" ? this.handleAddTodo(e) : ""
               }
               placeholder="Enter a new task..."
+              data-testid="input-field"
             />
             <InputGroupAddon addonType="append">
-              <Button type="submit" className="addTodobtn">
+              <Button
+                type="submit"
+                className="addTodobtn"
+                data-testid="input-field-button"
+              >
                 Add Todo
               </Button>
             </InputGroupAddon>
@@ -75,7 +79,7 @@ const mapStateToProps = (state) => {
   return {
     todo: state.todoReducer,
     inputTodo: state.inputReducer,
-    alert: state.alertReducer
+    alert: state.alertReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
