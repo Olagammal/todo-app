@@ -34,7 +34,7 @@ describe("input todo component", () => {
     ).toBeInTheDocument();
   });
 
-  it("should dispatch correct action when input is enetered in input field", () => {
+  it("should dispatch correct action when input is entered in input field", () => {
     fireEvent.change(screen.queryByTestId("input-field"), {
       target: { value: "A-string" },
     });
@@ -58,6 +58,17 @@ describe("input todo component", () => {
 
   it("should dispatch correct action when button is clicked", () => {
     fireEvent.click(screen.queryByTestId("input-field-button"));
+    expect(todoactions.addTodo("aaa")).toEqual({
+      type: types.ADDTODO,
+      payload: "aaa",
+    });
+  });
+
+  it("should dispatch correct action when enter button is pressed", () => {
+    fireEvent.keyPress(screen.queryByTestId("input-field-button"), {
+      key: "Enter",
+      code: "Enter",
+    });
     expect(todoactions.addTodo("aaa")).toEqual({
       type: types.ADDTODO,
       payload: "aaa",
