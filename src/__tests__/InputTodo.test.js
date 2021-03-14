@@ -7,7 +7,6 @@ import * as types from "../actionTypes";
 import inputreducer from "../reducer/inputReducer";
 import todoreducer from "../reducer/todoReducer";
 import InputTodo from "../components/InputTodo";
-import Alert from "../components/Alert";
 
 describe("input todo component", () => {
   beforeEach(() => {
@@ -62,9 +61,13 @@ describe("input todo component", () => {
       type: types.ADDTODO,
       payload: "aaa",
     });
+    // expect(alert.handleAlert("", "")).toEqual({
+    //   type: types.DISPLAYALERT,
+    //   payload: { type: "", text: "" },
+    // });
   });
 
-  it("should dispatch correct action when enter button is pressed", () => {
+  it("should dispatch correct action when enter key is pressed", () => {
     fireEvent.keyPress(screen.queryByTestId("input-field-button"), {
       key: "Enter",
       code: "Enter",

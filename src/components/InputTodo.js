@@ -34,6 +34,9 @@ class InputTodo extends Component {
       this.props.inputChange("");
     } else {
       this.props.handleAlert("error", "Enter a valid to-do");
+      setTimeout(() => {
+        this.props.handleAlert("", "");
+      }, 3400);
     }
   };
 

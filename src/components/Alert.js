@@ -18,20 +18,18 @@ class Alert extends Component {
     switch (alert.alertType) {
       case "error":
         if (document.getElementsByClassName("notification-error").length < 1) {
-          NotificationManager.error(alert.alertText);
+          NotificationManager.error(alert.alertText, null, 3000);
         }
         break;
       default:
         break;
     }
   };
-
   componentDidUpdate() {
     this.changeAlertState();
   }
-
   render() {
-    return <NotificationContainer leaveTimeOut={0} data-testid="alert" />;
+    return <NotificationContainer data-testid="alert" />;
   }
 }
 
