@@ -1,8 +1,19 @@
-import { createStore, applyMiddleware } from "redux";
-import { logger } from "redux-logger";
-import rootReducer from "../reducer";
+import React from "react";
+import { render as rtlRender } from "@testing-library/react";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 
-export const testStore = (initialState) => {
-  const storeWithMiddleware = applyMiddleware(logger)(createStore);
-  return storeWithMiddleware(rootReducer, initialState);
+import reducer from "../reducer";
+
+const render = (
+  ui,
+  { initialState, store = createStore(reducer, initialState), ...renderOptions }
+) => {
+  const Wrapper = ({ children }) => (
+    <Provider store={store}>{children}</Provider>
+  );
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 };
+
+export * from "@testing-library/react";
+export { render };

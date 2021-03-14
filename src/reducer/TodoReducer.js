@@ -5,7 +5,7 @@ const initialState = {
   todos: [],
 };
 
-const TodoReducer = (state = initialState, action) => {
+const todoReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADDTODO:
       return { ...state, todos: [...state.todos, action.payload] };
@@ -21,15 +21,13 @@ const TodoReducer = (state = initialState, action) => {
       return { ...state, todos: [...placeHolderTodos] };
     case DELETETODO:
       let Todos = JSON.parse(JSON.stringify(state.todos));
-      let deletionIndex = 0;
       Todos.map((singleTodo, index) =>
-        singleTodo.id === action.payload ? (deletionIndex = index) : ""
+        singleTodo.id === action.payload ? Todos.splice(index, 1) : ""
       );
-      Todos.splice(deletionIndex, 1);
       return { ...state, todos: [...Todos] };
     default:
       return state;
   }
 };
 
-export default TodoReducer;
+export default todoReducer;

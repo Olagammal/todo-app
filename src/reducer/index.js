@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
-import TodoReducer from "./TodoReducer";
-import InputReducer from "./InputReducer";
+import todoReducer from "./todoReducer";
+import inputReducer from "./inputReducer";
+import alertReducer from "./alertReducer"
 
-const rootReducer = combineReducers({ TodoReducer, InputReducer });
+const rootReducer = combineReducers({ todoReducer, inputReducer, alertReducer });
 export default rootReducer;

@@ -3,6 +3,7 @@ import Todo from "./Todo";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Form, FormGroup } from "reactstrap";
+import 'react-notifications/lib/notifications.css';
 
 class TodoContainer extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class TodoContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    todo: state.TodoReducer,
+    todo: state.todoReducer,
   };
 };
 

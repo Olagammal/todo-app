@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { handleAlert } from "../actions/alert";
 import { Input, InputGroup, InputGroupAddon } from "reactstrap";
 import { bindActionCreators } from "redux";
 import { BsFillTrashFill } from "react-icons/bs";
 import { RiCheckboxBlankLine, RiCheckboxFill } from "react-icons/ri";
-import { toggleCompletion, deleteTodo } from "../actions/TodoAction";
+import { toggleCompletion, deleteTodo } from "../actions/todoAction";
 
 class Todo extends Component {
   constructor(props) {
@@ -30,6 +31,7 @@ class Todo extends Component {
               onClick={(e) =>
                 this.toggleTodoCompletion(this.props.singleTodo.id)
               }
+              data-testid="check-box"
             >
               {this.props.singleTodo.status === "pending" ? (
                 <RiCheckboxBlankLine />
@@ -48,6 +50,7 @@ class Todo extends Component {
           <span
             className="input-group-text trash-icon"
             onClick={(e) => this.handleDeleteTodo(this.props.singleTodo.id)}
+            data-testid="trash-icon"
           >
             <BsFillTrashFill />
           </span>
@@ -58,11 +61,16 @@ class Todo extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    alert: state.alertReducer,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ toggleCompletion, deleteTodo }, dispatch);
+  return bindActionCreators(
+    { toggleCompletion, deleteTodo, handleAlert },
+    dispatch
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo);

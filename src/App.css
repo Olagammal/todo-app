@@ -15,9 +15,14 @@ form {
 }
 .addTodobtn {
   background-color: #1583b3;
+  border-color: #1583b3 !important;
 }
 .addTodobtn:hover {
   background-color: #1aa0d9;
+}
+.addTodobtn:focus{
+  box-shadow: none;
+  background-color: #1583b3;
 }
 .form-control[readonly] {
   background-color: #fff !important;

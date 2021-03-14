@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { inputChange } from "../actions/InputAction";
-import { addTodo } from "../actions/TodoAction";
+import { inputChange } from "../actions/inputAction";
+import { handleAlert } from "../actions/alert";
+import { addTodo } from "../actions/todoAction";
 import { v4 as uuidv4 } from "uuid";
 import {
   Form,
@@ -12,23 +13,31 @@ import {
   InputGroupAddon,
   Button,
 } from "reactstrap";
+import Alert from "./Alert";
 
 class InputTodo extends Component {
   constructor(props) {
     super(props);
   }
   handleInputChange = (e) => {
-    console.log(e.key);
     this.props.inputChange(e.target.value);
   };
   handleAddTodo = (e) => {
+    const { inputTodo } = this.props;
     e.preventDefault();
-    this.props.addTodo({
-      id: uuidv4(),
-      text: this.props.inputTodo.todo,
-      status: "pending",
-    });
-    this.props.inputChange("");
+    if (inputTodo.todo) {
+      this.props.addTodo({
+        id: uuidv4(),
+        text: inputTodo.todo,
+        status: "pending",
+      });
+      this.props.inputChange("");
+    } else {
+      this.props.handleAlert("error", "Enter a valid to-do");
+      setTimeout(() => {
+        this.props.handleAlert("", "");
+      }, 3400);
+    }
   };
 
   render() {
@@ -51,9 +60,14 @@ class InputTodo extends Component {
                 e.key === "Enter" ? this.handleAddTodo(e) : ""
               }
               placeholder="Enter a new task..."
+              data-testid="input-field"
             />
             <InputGroupAddon addonType="append">
-              <Button type="submit" className="addTodobtn">
+              <Button
+                type="submit"
+                className="addTodobtn"
+                data-testid="input-field-button"
+              >
                 Add Todo
               </Button>
             </InputGroupAddon>
@@ -66,11 +80,12 @@ class InputTodo extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    todo: state.TodoReducer,
-    inputTodo: state.InputReducer,
+    todo: state.todoReducer,
+    inputTodo: state.inputReducer,
+    alert: state.alertReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ addTodo, inputChange }, dispatch);
+  return bindActionCreators({ addTodo, inputChange, handleAlert }, dispatch);
 };
 export default connect(mapStateToProps, mapDispatchToProps)(InputTodo);

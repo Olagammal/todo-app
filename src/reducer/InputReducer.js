@@ -4,7 +4,7 @@ const initialState = {
   todo: "",
 };
 
-const InputReducer = (state = initialState, action) => {
+const inputReducer = (state = initialState, action) => {
   switch (action.type) {
     case INPUTCHANGE:
       return { ...state, todo: action.payload };
@@ -13,4 +13,4 @@ const InputReducer = (state = initialState, action) => {
   }
 };
 
-export default InputReducer;
+export default inputReducer;
