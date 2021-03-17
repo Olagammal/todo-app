@@ -20,7 +20,7 @@ form {
 .addTodobtn:hover {
   background-color: #1aa0d9;
 }
-.addTodobtn:focus{
+.addTodobtn:focus,.addTodobtn:active{
   box-shadow: none;
   background-color: #1583b3;
 }
