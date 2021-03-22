@@ -1,7 +1,13 @@
 import React from "react";
 import { render, fireEvent, screen } from "../utils";
 import "@testing-library/jest-dom";
+<<<<<<< HEAD
 import { cleanup } from "@testing-library/react";
+=======
+import * as inputactions from "../actions/inputAction";
+import * as todoactions from "../actions/todoAction";
+import * as alertactions from "../actions/alert"
+>>>>>>> 3272d9a7cb63e5c3e01614d4f04d11922f10443d
 import * as types from "../actionTypes";
 import * as inputactions from "../actions/inputAction";
 import inputreducer from "../reducer/inputReducer";
@@ -12,6 +18,8 @@ import App from "../App";
 jest.useFakeTimers();
 
 describe("input todo component", () => {
+  const itif = (condition) => condition ? it : it.skip;
+
   beforeEach(() => {
     render(<InputTodo />, {
       initialState: {
@@ -23,11 +31,11 @@ describe("input todo component", () => {
   });
 
   it("Should render the InputField", () => {
-    expect(screen.queryByTestId("input-field")).toBeInTheDocument();
+    expect(screen.getByTestId("input-field")).toBeInTheDocument();
   });
 
   it("Should render the button", () => {
-    expect(screen.queryByTestId("input-field-button")).toBeInTheDocument();
+    expect(screen.getByTestId("input-field-button")).toBeInTheDocument();
   });
 
   it("Should have placeholder text", () => {
@@ -36,8 +44,15 @@ describe("input todo component", () => {
     ).toBeInTheDocument();
   });
 
+  it("should change input field value displayed when an input is entered", () => {
+    fireEvent.change(screen.getByTestId("input-field"), {
+      target: { value: "A-string" },
+    });
+    expect(screen.getByTestId("input-field").value).toBe("A-string")
+  });
+
   it("should dispatch correct action when input is entered in input field", () => {
-    fireEvent.change(screen.queryByTestId("input-field"), {
+    fireEvent.change(screen.getByTestId("input-field"), {
       target: { value: "A-string" },
     });
     expect(inputactions.inputChange("string-value")).toEqual({
@@ -46,7 +61,7 @@ describe("input todo component", () => {
     });
   });
 
-  it("should change store value when an input is entered", () => {
+  it("should change reducer value when an input is entered", () => {
     expect(
       inputreducer(
         { todo: "" },
@@ -58,7 +73,31 @@ describe("input todo component", () => {
     ).toEqual({ todo: "A-string" });
   });
 
+  // it("should dispatch correct action when button is clicked", () => {
+  //   fireEvent.click(screen.queryByTestId("input-field-button"));
+  //   // expect(todoactions.addTodo("")).toEqual({
+  //   //   type: types.ADDTODO,
+  //   //   payload: "",
+  //   // });
+  //   // expect(alert.handleAlert("", "")).toEqual({
+  //   //   type: types.DISPLAYALERT,
+  //   //   payload: { type: "", text: "" },
+  //   // });
+  // });
+
+  it("should dispatch correct action when enter key is pressed", () => {
+    fireEvent.keyPress(screen.getByTestId("input-field-button"), {
+      key: "Enter",
+      code: "Enter",
+    });
+    expect(todoactions.addTodo("aaa")).toEqual({
+      type: types.ADDTODO,
+      payload: "aaa",
+    });
+  });
+
   it("should add todo to store when button is clicked", () => {
+    fireEvent.click(screen.getByTestId("input-field-button"));
     expect(
       todoreducer(
         { todos: ["ppp"] },
@@ -69,6 +108,7 @@ describe("input todo component", () => {
       )
     ).toEqual({ todos: ["ppp", "aaa"] });
   });
+
 });
 
 describe("testing for alert on click", () => {
