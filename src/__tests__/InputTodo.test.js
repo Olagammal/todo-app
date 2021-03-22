@@ -1,12 +1,15 @@
 import React from "react";
 import { render, fireEvent, screen } from "../utils";
 import "@testing-library/jest-dom";
-import * as inputactions from "../actions/inputAction";
-import * as todoactions from "../actions/todoAction";
+import { cleanup } from "@testing-library/react";
 import * as types from "../actionTypes";
+import * as inputactions from "../actions/inputAction";
 import inputreducer from "../reducer/inputReducer";
 import todoreducer from "../reducer/todoReducer";
 import InputTodo from "../components/InputTodo";
+import App from "../App";
+
+jest.useFakeTimers();
 
 describe("input todo component", () => {
   beforeEach(() => {
@@ -55,29 +58,6 @@ describe("input todo component", () => {
     ).toEqual({ todo: "A-string" });
   });
 
-  it("should dispatch correct action when button is clicked", () => {
-    fireEvent.click(screen.queryByTestId("input-field-button"));
-    // expect(todoactions.addTodo("")).toEqual({
-    //   type: types.ADDTODO,
-    //   payload: "",
-    // });
-    // expect(alert.handleAlert("", "")).toEqual({
-    //   type: types.DISPLAYALERT,
-    //   payload: { type: "", text: "" },
-    // });
-  });
-
-  it("should dispatch correct action when enter key is pressed", () => {
-    fireEvent.keyPress(screen.queryByTestId("input-field-button"), {
-      key: "Enter",
-      code: "Enter",
-    });
-    expect(todoactions.addTodo("aaa")).toEqual({
-      type: types.ADDTODO,
-      payload: "aaa",
-    });
-  });
-
   it("should add todo to store when button is clicked", () => {
     expect(
       todoreducer(
@@ -90,3 +70,54 @@ describe("input todo component", () => {
     ).toEqual({ todos: ["ppp", "aaa"] });
   });
 });
+
+describe("testing for alert on click", () => {
+  beforeEach(() => {
+    render(<App />, {
+      initialState: {
+        alertReducer: { alertText: "", alertType: "" },
+        inputReducer: { todo: "" },
+        todoReducer: {
+          todos: [],
+        },
+      },
+    });
+  });
+  afterEach(cleanup);
+  it("should render an alert", () => {
+    fireEvent.click(screen.getByTestId("input-field-button"));
+    expect(screen.getByText("Enter a valid to-do")).toBeInTheDocument();
+  });
+
+  it("should render alert for enter key", () => {
+    fireEvent.keyPress(screen.getByTestId("input-field"), {
+      key: "Enter",
+      code: "Enter",
+      charCode: 13,
+    });
+    expect(screen.getByText("Enter a valid to-do")).toBeNull();
+  });
+});
+
+// describe("testing for alert on keypress", () => {
+//   beforeEach(() => {
+//     render(<App />, {
+//       initialState: {
+//         alertReducer: { alertText: "", alertType: "" },
+//         inputReducer: { todo: "" },
+//         todoReducer: {
+//           todos: [],
+//         },
+//       },
+//     });
+//   });
+
+//   it("should render alert for enter key", () => {
+//     fireEvent.keyPress(screen.getByTestId("input-field"), {
+//       key: "Enter",
+//       code: "Enter",
+//       charCode: 13,
+//     });
+//     expect(screen.getByText("Enter a valid to-do")).toBeInTheDocument();
+//   });
+// });

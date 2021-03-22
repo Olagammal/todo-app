@@ -21,7 +21,7 @@ class Todo extends Component {
   };
   render() {
     return (
-      <div className={`singleTodo`}>
+      <div className={`singleTodo`} data-testid="singleTodo">
         <InputGroup>
           <InputGroupAddon addonType="prepend">
             <span
