@@ -13,7 +13,6 @@ import {
   InputGroupAddon,
   Button,
 } from "reactstrap";
-import Alert from "./Alert";
 
 class InputTodo extends Component {
   constructor(props) {
@@ -42,13 +41,7 @@ class InputTodo extends Component {
 
   render() {
     return (
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-          this.handleAddTodo(e);
-        }}
-        data-test="InputTodo"
-      >
+      <Form>
         <FormGroup>
           <InputGroup>
             <Input
@@ -56,9 +49,6 @@ class InputTodo extends Component {
               onChange={(e) => {
                 this.handleInputChange(e);
               }}
-              onKeyPress={(e) =>
-                e.key === "Enter" ? this.handleAddTodo(e) : ""
-              }
               placeholder="Enter a new task..."
               data-testid="input-field"
             />
@@ -67,6 +57,10 @@ class InputTodo extends Component {
                 type="submit"
                 className="addTodobtn"
                 data-testid="input-field-button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.handleAddTodo(e);
+                }}
               >
                 Add Todo
               </Button>

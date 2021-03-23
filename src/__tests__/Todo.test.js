@@ -29,7 +29,6 @@ describe("todo component", () => {
   });
 
   it("should dispatch correct action on clicking checkbox", () => {
-    fireEvent.click(screen.queryByTestId("check-box"));
     expect(todoactions.toggleCompletion(1)).toEqual({
       type: types.TOGGLECOMPLETION,
       payload: 1,
@@ -65,7 +64,6 @@ describe("todo component", () => {
   });
 
   it("should dispatch correct action on clicking trash-icon", () => {
-    fireEvent.click(screen.queryByTestId("trash-icon"));
     expect(todoactions.deleteTodo(1)).toEqual({
       type: types.DELETETODO,
       payload: 1,

@@ -1,14 +1,16 @@
 import React from "react";
 import { render, fireEvent, screen } from "../utils";
-import "@testing-library/jest-dom";
+import userEvent from '@testing-library/user-event'
 import * as inputactions from "../actions/inputAction";
-import * as todoactions from "../actions/todoAction";
+import "@testing-library/jest-dom"
 import * as types from "../actionTypes";
 import inputreducer from "../reducer/inputReducer";
 import todoreducer from "../reducer/todoReducer";
 import InputTodo from "../components/InputTodo";
+import App from "../App";
 
 describe("input todo component", () => {
+
   beforeEach(() => {
     render(<InputTodo />, {
       initialState: {
@@ -20,11 +22,11 @@ describe("input todo component", () => {
   });
 
   it("Should render the InputField", () => {
-    expect(screen.queryByTestId("input-field")).toBeInTheDocument();
+    expect(screen.getByTestId("input-field")).toBeInTheDocument();
   });
 
   it("Should render the button", () => {
-    expect(screen.queryByTestId("input-field-button")).toBeInTheDocument();
+    expect(screen.getByTestId("input-field-button")).toBeInTheDocument();
   });
 
   it("Should have placeholder text", () => {
@@ -33,8 +35,15 @@ describe("input todo component", () => {
     ).toBeInTheDocument();
   });
 
+  it("should change input field value displayed when an input is entered", () => {
+    fireEvent.change(screen.getByTestId("input-field"), {
+      target: { value: "A-string" },
+    });
+    expect(screen.getByTestId("input-field").value).toBe("A-string")
+  });
+
   it("should dispatch correct action when input is entered in input field", () => {
-    fireEvent.change(screen.queryByTestId("input-field"), {
+    fireEvent.change(screen.getByTestId("input-field"), {
       target: { value: "A-string" },
     });
     expect(inputactions.inputChange("string-value")).toEqual({
@@ -43,7 +52,7 @@ describe("input todo component", () => {
     });
   });
 
-  it("should change store value when an input is entered", () => {
+  it("should change reducer value when an input is entered", () => {
     expect(
       inputreducer(
         { todo: "" },
@@ -53,29 +62,6 @@ describe("input todo component", () => {
         }
       )
     ).toEqual({ todo: "A-string" });
-  });
-
-  it("should dispatch correct action when button is clicked", () => {
-    fireEvent.click(screen.queryByTestId("input-field-button"));
-    // expect(todoactions.addTodo("")).toEqual({
-    //   type: types.ADDTODO,
-    //   payload: "",
-    // });
-    // expect(alert.handleAlert("", "")).toEqual({
-    //   type: types.DISPLAYALERT,
-    //   payload: { type: "", text: "" },
-    // });
-  });
-
-  it("should dispatch correct action when enter key is pressed", () => {
-    fireEvent.keyPress(screen.queryByTestId("input-field-button"), {
-      key: "Enter",
-      code: "Enter",
-    });
-    expect(todoactions.addTodo("aaa")).toEqual({
-      type: types.ADDTODO,
-      payload: "aaa",
-    });
   });
 
   it("should add todo to store when button is clicked", () => {
@@ -89,4 +75,24 @@ describe("input todo component", () => {
       )
     ).toEqual({ todos: ["ppp", "aaa"] });
   });
+
 });
+
+describe("testing for alert on click", () => {
+  beforeEach(() => {
+    render(<App />, {
+      initialState: {
+        alertReducer: { alertText: "", alertType: "" },
+        inputReducer: { todo: "" },
+        todoReducer: {
+          todos: [],
+        },
+      },
+    });
+  });
+  it("should render an alert", () => {
+    userEvent.click(screen.getByTestId("input-field-button"));
+    expect(screen.getByText("Enter a valid to-do")).toBeInTheDocument();
+  });
+});
+
