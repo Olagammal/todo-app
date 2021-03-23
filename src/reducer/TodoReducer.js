@@ -1,5 +1,4 @@
 import { ADDTODO, TOGGLECOMPLETION, DELETETODO } from "../actionTypes";
-import Todo from "../components/Todo";
 
 const initialState = {
   todos: [],

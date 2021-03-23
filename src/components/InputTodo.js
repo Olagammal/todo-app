@@ -49,9 +49,6 @@ class InputTodo extends Component {
               onChange={(e) => {
                 this.handleInputChange(e);
               }}
-              onKeyPress={(e) =>
-                e.key === "Enter" ? this.handleAddTodo(e) : ""
-              }
               placeholder="Enter a new task..."
               data-testid="input-field"
             />
